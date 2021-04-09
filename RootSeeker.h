@@ -35,14 +35,29 @@ THE SOFTWARE.
 
 //#define _DBL_TYPE_MATH_
 //#define _RATIO_TYPE_MATH_
+// check for float.h epsilons
 #define _DBL_ERROR 0.0001
 
+//TODO: use something like double.NaN
+#define NOROOT 11111111111
+
+//Use EXIT_SUCCESS
+#define SUCCESS 0x1 
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
+#include <float.h>
+#include <math.h>
+
+bool isEqual(double x, double y){
+
+   return fabs(x-y)< _DBL_ERROR;
+}
+
 
 // or as a class in C++
-typdef struct RootSeeker{
+typedef struct RootSeeker{
 
     //private
     double* coef;
