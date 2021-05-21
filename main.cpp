@@ -30,7 +30,7 @@ Polynom randomPoly(int maxDegree)
 
     while (true)
     {
-        n = rand() % maxDegree;
+        n = rand() % (maxDegree + 1);
         if (n != 0)
         {
             break;
