@@ -29,6 +29,36 @@ void RootSeeker::SetPoly(int d, double *coefs)
     }
 }
 
+void RootSeeker::SetPoly(Polynom poly)
+{
+    p.deletePoly();
+
+    int d = poly.degree;
+    int degr = d;
+    for (int i = degr; i > 0; i--)
+    {
+        if (poly.koef[i] == 0)
+        {
+            d--;
+        }
+        else
+        {
+            break;
+        }
+    }
+    if (d == 0)
+    {
+        cout << "Your polynom is incorrect\n";
+        correctPoly = false;
+        p.SetPoly(degr, poly.koef);
+    }
+    else
+    {
+        correctPoly = true;
+        p = poly;
+    }
+}
+
 void RootSeeker::printPoly()
 {
     p.printPoly();
@@ -137,11 +167,12 @@ double RootSeeker::findOneRoot_Lobachevskiy(Polynom &poly, double left, double r
         int st = 0;
         while (true)
         {
-            brk = 1;
+            brk = 0;
 
             // create a new polynomial
             c[0] = b[0]*b[0];
             c[N1 - 1] = b[N1 - 1]*b[N1 - 1];
+
             int z, i;
             for (int k = 1; k < N1 - 1; k++)
             {
@@ -160,24 +191,42 @@ double RootSeeker::findOneRoot_Lobachevskiy(Polynom &poly, double left, double r
                 }
             }
 
-            // if c[i] = b[i]^2 or count of the iterations > 10 then break
-            for (int i = 0; i < N1; i++)
+
+            mpf_class x_;
+            for (int i = 1; i < N1; i++)
             {
-                if (abs(abs(c[i]) - b[i]*b[i]) > EPSILON)
+                if (b[i - 1] == 0)
                 {
-                    brk = 0;
+                    continue;
+                }
+
+                x_ = abs(b[i]/b[i - 1]);
+
+                for (int j = 0; j < st; j++)
+                {
+                    {
+                        x_ = sqrt(x_);
+                    }
+                }
+
+                if (fabs(poly.value(x_.get_d())) < EPSILON || fabs(poly.value(- x_.get_d())) < EPSILON)
+                {
+                    brk = 1;
                     break;
                 }
+
+
             }
+            x = x_.get_d();
             if (brk)
             {
                 break;
             }
-
             st++;
-            if (st > 10)
+            if (st > 25)
             {
-                break;
+                cout << "Method cannot converge. ";
+                return NOROOT;
             }
 
             // update coefficients
@@ -190,6 +239,7 @@ double RootSeeker::findOneRoot_Lobachevskiy(Polynom &poly, double left, double r
         }
 
         // calculate root
+        /*
         mpf_class x_;
         for (int i = 1; i < N1; i++)
         {
@@ -215,6 +265,7 @@ double RootSeeker::findOneRoot_Lobachevskiy(Polynom &poly, double left, double r
 
         }
         x = x_.get_d();
+        */
     }
 
     // determine the sign of root
@@ -250,7 +301,7 @@ double RootSeeker::findOneRoot_FalsePosition(Polynom &poly, double left, double 
         i++;
         if (i > 10000)
         {
-            cout << "This method doesn't work for this polynom\n";
+            cout << "This method doesn't work for this polynom. ";
             return NOROOT;
         }
     }

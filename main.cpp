@@ -23,15 +23,96 @@ double* randomArray(int n)
    return randArray;
 }
 
+Polynom randomPoly(int maxDegree)
+{
+    double *roots;
+    int n;
+
+    while (true)
+    {
+        n = rand() % maxDegree;
+        if (n != 0)
+        {
+            break;
+        }
+    }
+
+    roots = randomArray(n);
+    cout << "Roots: ";
+    for (int i = 0; i < n; i++)
+    {
+        cout << roots[i] << " ";
+    }
+    cout << "\n";
+
+    Polynom dvochlen, p;
+    dvochlen.degree = 1;
+    dvochlen.koef = new double[2];
+    dvochlen.koef[1] = 1;
+
+    dvochlen.koef[0] = - roots[0];
+    p = dvochlen;
+    for (int i = 1; i < n; i++)
+    {
+        dvochlen.koef[0] = - roots[i];
+        p = p*dvochlen;
+    }
+
+    return p;
+
+}
 
 
+// Input Polynomial: {1, 2, 3, 4} -> 4x^3 + 3x^2 + 2x + 1
 
 int main()
 {
+    //   Test 1. Generate random the polynomials by their roots
+    cout << "\nTEST 1\n\n";
 
+    Polynom p;
     srand(time(NULL));
 
-    // Input Polynom: {1, 2, 3, 4} -> 4x^3 + 3x^2 + 2x + 1
+    int tests = 10;
+    int maxDegree = 5;
+
+    cout << "-------------------------------------------------------------------------\n";
+    for (int i = 0; i < tests; i++)
+    {
+        p = randomPoly(maxDegree);
+
+        cout << "Polynom: ";
+        p.printPoly();
+        cout << "\n";
+
+        RootSeeker rs1;
+        rs1.SetInterval(-600, 600);
+
+        rs1.SetPoly(p);
+
+        rs1.countOfRoots();
+
+        cout << "(Newton Method) ";
+        rs1.findRoots(rs1.findOneRoot_Newton);
+        rs1.printRoots();
+
+        cout << "(Lobachevskiy Method) ";
+        rs1.findRoots(rs1.findOneRoot_Lobachevskiy);
+        rs1.printRoots();
+
+        cout << "(False Position Method) ";
+        rs1.findRoots(rs1.findOneRoot_FalsePosition);
+        rs1.printRoots();
+        cout << "-------------------------------------------------------------------------\n";
+    }
+
+
+
+
+    /*
+    //   Test 2. Find roots of the polynomials (1, 2 and 3 orders)
+
+    cout << "\n\n\n\n\n\n\n\n\n TEST 2\n\n"
 
     RootSeeker rs;
     rs.SetInterval(-100, 100);
@@ -70,6 +151,7 @@ int main()
         cout << "\n";
 
     }
+    cout << "-------------------------------------------------------------------------\n";
 
 
     cout << "2nd order\n";
@@ -107,6 +189,7 @@ int main()
 
 
     }
+    cout << "-------------------------------------------------------------------------\n";
 
 
     cout << "3d order\n";
@@ -145,7 +228,10 @@ int main()
     }
 
 
-    cout << "------------------------------------------------------------------- \n";
+
+    //   Test 3. Generate random polynomials and calculate time work of the methods
+
+    cout << "\n\n\n\n\n\n\n\n\n TEST 3\n\n"
 
     double t1 = 0;
     double t2 = 0;
@@ -188,5 +274,5 @@ int main()
     cout << "Newton: " << t1 << " seconds\n";
     cout << "Lobachevskiy: " << t2 << " seconds\n";
     cout << "False Position: " << t3 << " seconds\n";
-
+    */
 }

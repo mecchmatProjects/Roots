@@ -308,4 +308,23 @@ void Polynom::removeMultipleRoots()
     }
 }
 
+Polynom Polynom::operator *(Polynom &ob)
+{
+   Polynom res;
+   res.degree = degree + ob.degree;
+   res.koef = new double[res.degree + 1];
+
+   memset(res.koef, 0, (res.degree + 1)*sizeof(double));
+
+   for (int i = 0; i <= ob.degree; i++)
+   {
+     for (int j = 0; j <= degree; j++)
+     {
+         res.koef[i + j] += ob.koef[i]*koef[j];
+     }
+   }
+
+   return res;
+}
+
 

@@ -23,6 +23,7 @@ public:
     void SetPoly(int d, double *k);
     void copyPoly(Polynom &ob);
     Polynom operator/(Polynom &ob);
+    Polynom operator*(Polynom &ob);
     Polynom operator%(Polynom &ob);
     Polynom& operator=(const Polynom &ob);
     void printPoly();

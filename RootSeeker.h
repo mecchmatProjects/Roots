@@ -17,6 +17,7 @@ public:
     RootSeeker(){};
 
     void SetPoly(int d, double *coef);
+    void SetPoly(Polynom poly);
     void printPoly();
     void SetInterval(double a, double b);
     void countOfRoots();
