@@ -6,11 +6,13 @@
 
 [Graeffe](https://en.wikipedia.org/wiki/Graeffe%27s_method)
 
-[recent coolest](https://en.wikipedia.org/wiki/Jenkins%E2%80%93Traub_algorithm)
+[recent coolest: Jenkins-Traub ](https://en.wikipedia.org/wiki/Jenkins%E2%80%93Traub_algorithm)
+
+[Jenkins-Traub for real numbers](https://www.researchgate.net/publication/242529401_A_Three-Stage_Algorithm_for_Real_Polynomials_Using_Quadratic_Iteration)
 
 [others](https://en.wikipedia.org/wiki/Root-finding_algorithms)
 
-[Sturm theory] (https://en.wikipedia.org/wiki/Sturm%27s_theorem)
+[Sturm theory](https://en.wikipedia.org/wiki/Sturm%27s_theorem)
 
 ## Files:
 
@@ -34,7 +36,7 @@ Methods:
 
 - find N roots on interval:
 
-  int findRoots_name(arr* roots); // or return vector
+  int findRoots_name(arr* roots, size_t N); // or return vector
 
 TODO:
   a) complex roots

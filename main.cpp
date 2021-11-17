@@ -109,7 +109,7 @@ int main()
 
 
 
-    /*
+    
     //   Test 2. Find roots of the polynomials (1, 2 and 3 orders)
 
     cout << "\n\n\n\n\n\n\n\n\n TEST 2\n\n"
@@ -274,5 +274,5 @@ int main()
     cout << "Newton: " << t1 << " seconds\n";
     cout << "Lobachevskiy: " << t2 << " seconds\n";
     cout << "False Position: " << t3 << " seconds\n";
-    */
+    
 }
