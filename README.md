@@ -44,6 +44,29 @@ TODO:
   b) complex coefficients of polynome
 
 
+# Roots - optimization tasks
+int allMax_Fib(RealFunc f, TDBL a, TDBL b, TDBL* mins);
+//https://en.wikipedia.org/wiki/Golden-section_search
+
+int allMax_GoldenSection(RealFunc f, TDBL a, TDBL b, TDBL* mins);
+//https://en.wikipedia.org/wiki/Ternary_search
+int allMax_Brent(RealFunc f, TDBL a, TDBL b, TDBL* mins);
+//https://en.wikipedia.org/wiki/Brent%27s_method
+int allMax_Newton(RealFunc f, TDBL a, TDBL b, TDBL* mins);
+//https://en.wikipedia.org/wiki/Newton%27s_method_in_optimization
+
+## References for optimization tasks:
+
+Include file:
+funcs.h
+
+//https://en.wikipedia.org/wiki/Golden-section_search
+//https://en.wikipedia.org/wiki/Ternary_search
+
+//https://en.wikipedia.org/wiki/Brent%27s_method
+
+//https://en.wikipedia.org/wiki/Newton%27s_method_in_optimization
+
 
 
 
