@@ -7,7 +7,7 @@ Polynom::Polynom()
     koef[0] = 0;
 }
 
-Polynom::Polynom(int d, double *k)
+Polynom::Polynom(int d, double* k)
 {
     degree = d;
     koef = new double[degree + 1];
@@ -20,7 +20,7 @@ Polynom::Polynom(int d, double *k)
 Polynom::~Polynom()
 {
     degree = 0;
-    delete[] koef;
+    //delete[] koef;
 }
 
 void Polynom::deletePoly()
@@ -41,17 +41,17 @@ Polynom Polynom::derivative()
 {
     Polynom p;
     int d = degree - 1;
-    double *coef;
+    double* coef;
     coef = new double[d + 1];
     for (int i = 0; i <= d; i++)
     {
-        coef[i] = koef[i + 1]*(i + 1);
+        coef[i] = koef[i + 1] * (i + 1);
     }
     p.SetPoly(d, coef);
     return p;
 }
 
-void Polynom::SetPoly(int d, double *k)
+void Polynom::SetPoly(int d, double* k)
 {
     degree = d;
     koef = new double[degree + 1];
@@ -61,7 +61,7 @@ void Polynom::SetPoly(int d, double *k)
     }
 }
 
-Polynom& Polynom::operator=(const Polynom &ob)
+Polynom& Polynom::operator=(const Polynom& ob)
 {
     degree = ob.degree;
     koef = new double[degree + 1];
@@ -73,7 +73,7 @@ Polynom& Polynom::operator=(const Polynom &ob)
     return *this;
 }
 
-void Polynom::copyPoly(Polynom &ob)
+void Polynom::copyPoly(Polynom& ob)
 {
     ob.degree = degree;
     ob.koef = new double[ob.degree + 1];
@@ -93,7 +93,7 @@ void Polynom::printPoly()
     cout << "\n";
 }
 
-Polynom Polynom::operator /(Polynom &ob)
+Polynom Polynom::operator /(Polynom& ob)
 {
 
     bool inAlgoritm = true;
@@ -105,7 +105,7 @@ Polynom Polynom::operator /(Polynom &ob)
 
     temp.degree = degree - ob.degree;
     temp.koef = new double[temp.degree + 1];
-    memset(temp.koef, 0, (temp.degree + 1)*sizeof(double));
+    memset(temp.koef, 0, (temp.degree + 1) * sizeof(double));
 
     ob_1.degree = degree;
     ob_1.koef = new double[degree + 1];
@@ -136,7 +136,7 @@ Polynom Polynom::operator /(Polynom &ob)
 
         if (ob_2.degree < ob_1.degree)
         {
-            for (i = ob_1.degree,j = ob_2.degree; i >= 0; i--, j--)
+            for (i = ob_1.degree, j = ob_2.degree; i >= 0; i--, j--)
             {
                 if (j < 0)
                 {
@@ -174,7 +174,7 @@ Polynom Polynom::operator /(Polynom &ob)
     return temp;
 }
 
-Polynom Polynom::operator %(Polynom &ob)
+Polynom Polynom::operator %(Polynom& ob)
 {
 
     bool inAlgoritm = true;
@@ -186,7 +186,7 @@ Polynom Polynom::operator %(Polynom &ob)
 
     temp.degree = degree - ob.degree;
     temp.koef = new double[temp.degree + 1];
-    memset(temp.koef, 0, (temp.degree + 1)*sizeof(double));
+    memset(temp.koef, 0, (temp.degree + 1) * sizeof(double));
 
     ob_1.degree = degree;
     ob_1.koef = new double[degree + 1];
@@ -217,7 +217,7 @@ Polynom Polynom::operator %(Polynom &ob)
 
         if (ob_2.degree < ob_1.degree)
         {
-            for (i = ob_1.degree,j = ob_2.degree; i >= 0; i--, j--)
+            for (i = ob_1.degree, j = ob_2.degree; i >= 0; i--, j--)
             {
                 if (j < 0)
                 {
@@ -260,7 +260,17 @@ double Polynom::value(double x)
     double y = 0;
     for (int i = 0; i <= degree; i++)
     {
-        y += koef[i]*powl(x, i);
+        y += koef[i] * powl(x, i);
+    }
+    return y;
+}
+
+complex <double> Polynom::value_complex(complex <double> x)
+{
+    complex <double> y(0, 0);
+    for (int i = 0; i <= degree; i++)
+    {
+        y += koef[i] * pow(x, i);
     }
     return y;
 }
@@ -276,7 +286,7 @@ void Polynom::removeMultipleRoots()
 
     while (true)
     {
-        r3 = r1%r2;
+        r3 = r1 % r2;
 
         if (r3.degree <= 0)
         {
@@ -295,7 +305,7 @@ void Polynom::removeMultipleRoots()
         if (r2.degree > 0)
         {
             this->deletePoly();
-            *this = p/r2;
+            *this = p / r2;
         }
     }
     else
@@ -303,28 +313,66 @@ void Polynom::removeMultipleRoots()
         if (r3.degree > 0)
         {
             this->deletePoly();
-            *this = p/r3;
+            *this = p / r3;
         }
     }
 }
 
-Polynom Polynom::operator *(Polynom &ob)
+Polynom Polynom::operator *(Polynom& ob)
 {
-   Polynom res;
-   res.degree = degree + ob.degree;
-   res.koef = new double[res.degree + 1];
+    Polynom res;
+    res.degree = degree + ob.degree;
+    res.koef = new double[res.degree + 1];
 
-   memset(res.koef, 0, (res.degree + 1)*sizeof(double));
+    memset(res.koef, 0, (res.degree + 1) * sizeof(double));
 
-   for (int i = 0; i <= ob.degree; i++)
-   {
-     for (int j = 0; j <= degree; j++)
-     {
-         res.koef[i + j] += ob.koef[i]*koef[j];
-     }
-   }
+    for (int i = 0; i <= ob.degree; i++)
+    {
+        for (int j = 0; j <= degree; j++)
+        {
+            res.koef[i + j] += ob.koef[i] * koef[j];
+        }
+    }
 
-   return res;
+    return res;
+}
+
+Polynom Polynom::operator -(Polynom& ob)
+{
+    Polynom res;
+    res.degree = degree;
+    if (degree - ob.degree > 0) 
+    {
+        res.degree = degree;
+    }
+    else if (degree - ob.degree < 0) 
+    {
+        res.degree = ob.degree;
+    }
+    else 
+    {
+        res.degree = degree;
+        for (int i = 0; i <= degree; i++)
+        {
+            if (koef[i] == ob.koef[i]) 
+            {
+                res.degree -= 1;
+            }
+        }
+    }
+    res.koef = new double[res.degree + 1];
+
+    memset(res.koef, 0, (res.degree + 1) * sizeof(double));
+
+    for (int i = 0; i <= degree; i++)
+    {
+        for (int j = 0; j <= ob.degree; j++)
+        {
+            res.koef[i + j] += koef[i] - ob.koef[j];
+        }
+    }
+
+    return res;
 }
 
 
